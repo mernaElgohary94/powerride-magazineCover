@@ -74,7 +74,7 @@ export default function App() {
     await session.pause();
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: { ideal: nextFacing }, width: { ideal: 1280 }, height: { ideal: 720 } },
-      audio: true,
+      audio: false,
       
     });
     streamRef.current = stream;
@@ -83,7 +83,7 @@ export default function App() {
     const transform = nextFacing === 'user' ? Transform2D.MirrorX : Transform2D.Identity;
     source.setTransform(transform);
     await session.setSource(source);
-    session.unmute();
+    //session.unmute();
     await session.play();
     setFacing(nextFacing);
   }, []);
@@ -167,21 +167,21 @@ export default function App() {
 
 const canvasStream = recordingCanvas.captureStream(30);
 
-const videoTrack = canvasStream.getVideoTracks()[0];
+// const videoTrack = canvasStream.getVideoTracks()[0];
 
-const audioTrack = streamRef.current?.getAudioTracks()[0];
+// const audioTrack = streamRef.current?.getAudioTracks()[0];
 
-if (!audioTrack) {
-  setError('No audio track available.');
-  return;
-}
+// if (!audioTrack) {
+//   setError('No audio track available.');
+//   return;
+// }
 
-const combinedStream = new MediaStream([
-  videoTrack,
-  audioTrack,
-]);
+// const combinedStream = new MediaStream([
+//   videoTrack,
+//   audioTrack,
+// ]);
 
-const recorder = new MediaRecorder(combinedStream, { mimeType });
+const recorder = new MediaRecorder(canvasStream, { mimeType });
 
 //    const canvasStream = recordingCanvas.captureStream(30);
 
