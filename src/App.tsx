@@ -84,6 +84,7 @@ export default function App() {
     source.setTransform(transform);
     await session.setSource(source);
     //session.unmute();
+     source.setTransform(transform);
     await session.play();
     setFacing(nextFacing);
   }, []);
